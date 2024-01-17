@@ -5,14 +5,11 @@ generic-service:
   replicaCount: 2
 
   ingress:
-    host: hmpps-prisoner-download-preprod.hmpps.service.justice.gov.uk
+    host: prisoner-download-preprod.prison.service.justice.gov.uk
 
   env:
-    INGRESS_URL: "https://hmpps-prisoner-download-preprod.hmpps.service.justice.gov.uk"
+    INGRESS_URL: "https://prisoner-download-preprod.prison.service.justice.gov.uk"
     HMPPS_AUTH_URL: "https://sign-in-preprod.hmpps.service.justice.gov.uk/auth"
     MANAGE_USERS_API_URL: "https://manage-users-api-preprod.hmpps.service.justice.gov.uk"
     TOKEN_VERIFICATION_API_URL: "https://token-verification-api-preprod.prison.service.justice.gov.uk"
     ENVIRONMENT_NAME: PRE-PRODUCTION
-
-generic-prometheus-alerts:
-  alertSeverity: syscon
