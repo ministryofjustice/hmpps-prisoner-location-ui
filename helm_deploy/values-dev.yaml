@@ -4,15 +4,20 @@
 generic-service:
   replicaCount: 2
 
+  scheduledDowntime:
+    enabled: true
+    startup: '15 6 * * 1-5' # Start at 6.15am UTC Monday-Friday
+    shutdown: '24 21 * * 1-5' # Stop at 9.24pm UTC Monday-Friday
+
   ingress:
-    host: hmpps-prisoner-download-dev.hmpps.service.justice.gov.uk
+    host: prisoner-download-dev.prison.service.justice.gov.uk
 
   env:
-    INGRESS_URL: "https://hmpps-prisoner-download-dev.hmpps.service.justice.gov.uk"
+    INGRESS_URL: "https://prisoner-download-dev.prison.service.justice.gov.uk"
     HMPPS_AUTH_URL: "https://sign-in-dev.hmpps.service.justice.gov.uk/auth"
     MANAGE_USERS_API_URL: "https://manage-users-api-dev.hmpps.service.justice.gov.uk"
     TOKEN_VERIFICATION_API_URL: "https://token-verification-api-dev.prison.service.justice.gov.uk"
     ENVIRONMENT_NAME: DEV
 
 generic-prometheus-alerts:
-  alertSeverity: syscon
+  businessHoursOnly: true
