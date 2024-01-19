@@ -5,7 +5,20 @@
 
 {% block content %}
 
-  <h1>This site is under construction...</h1>
-  <p>Please check back later when there is content to view.</p>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <h1>Download NOMIS Report</h1>
+  </div>
+</div>
+
+<div class="govuk-grid-row hmpps-three-quarters-responsive">
+  <div class="govuk-grid-column-three-quarters">
+    {% if latestFileName %}
+      <a class="button button-start" target="_blank" href="{{ latestFileName }}" role="button">Download</a>
+    {% else %}
+      No files found for download.
+    {% endif %}
+  </div>
+</div>
 
 {% endblock %}

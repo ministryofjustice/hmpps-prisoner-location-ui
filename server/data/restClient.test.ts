@@ -57,6 +57,45 @@ describe.each(['get', 'patch', 'post', 'put', 'delete'] as const)('Method: %s', 
     })
   })
 
+  if (method === 'get') {
+    it('should return null for 404s if configured', async () => {
+      nock('http://localhost:8080', {
+        reqheaders: { authorization: 'Bearer token-1' },
+      })
+        [method]('/api/test')
+        .reply(404)
+
+      const result = await restClient[method]({
+        path: '/test',
+        headers: { header1: 'headerValue1' },
+        raw: true,
+        ignore404: true,
+      })
+
+      expect(nock.isDone()).toBe(true)
+
+      expect(result).toBeNull()
+    })
+
+    it('should throw 404s if not configured', async () => {
+      nock('http://localhost:8080', {
+        reqheaders: { authorization: 'Bearer token-1' },
+      })
+        [method]('/api/test')
+        .reply(404)
+
+      await expect(
+        restClient[method]({
+          path: '/test',
+          headers: { header1: 'headerValue1' },
+          raw: true,
+        }),
+      ).rejects.toThrow('Not Found')
+
+      expect(nock.isDone()).toBe(true)
+    })
+  }
+
   if (method === 'get' || method === 'delete') {
     it('should retry by default', async () => {
       nock('http://localhost:8080', {

@@ -17,6 +17,6 @@ export default class PrisonerDownloadApiClient {
 
   todaysFile(token: string): Promise<Download> {
     logger.info("Getting today's file: calling HMPPS Prisoner Download Api")
-    return PrisonerDownloadApiClient.restClient(token).get<Download>({ path: '/today' })
+    return PrisonerDownloadApiClient.restClient(token).get<Download>({ path: '/today', ignore404: true })
   }
 }
