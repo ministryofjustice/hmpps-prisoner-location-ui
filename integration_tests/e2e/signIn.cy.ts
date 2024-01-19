@@ -2,11 +2,12 @@ import IndexPage from '../pages/index'
 import AuthSignInPage from '../pages/authSignIn'
 import Page from '../pages/page'
 import AuthManageDetailsPage from '../pages/authManageDetails'
+import AuthErrorPage from '../pages/authError'
 
 context('Sign In', () => {
   beforeEach(() => {
     cy.task('reset')
-    cy.task('stubSignIn')
+    cy.task('stubSignIn', ['ROLE_PRISONER_DOWNLOAD'])
     cy.task('stubManageUser')
   })
 
@@ -18,6 +19,13 @@ context('Sign In', () => {
   it('Unauthenticated user navigating to sign in page directed to auth', () => {
     cy.visit('/sign-in')
     Page.verifyOnPage(AuthSignInPage)
+  })
+
+  it('User without prisoner download role denied access', () => {
+    cy.task('stubSignIn', ['ROLE_OTHER'])
+
+    cy.signIn({ failOnStatusCode: false })
+    Page.verifyOnPage(AuthErrorPage)
   })
 
   it('User name visible in header', () => {
