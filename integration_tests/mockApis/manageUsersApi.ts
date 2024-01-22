@@ -1,10 +1,12 @@
 import { stubFor } from './wiremock'
 
+const urlPrefix = '/manage-users-api'
+
 const stubUser = (name: string = 'john smith') =>
   stubFor({
     request: {
       method: 'GET',
-      urlPattern: '/manage-users-api/users/me',
+      urlPattern: `${urlPrefix}/users/me`,
     },
     response: {
       status: 200,
@@ -23,7 +25,7 @@ const ping = () =>
   stubFor({
     request: {
       method: 'GET',
-      urlPattern: '/manage-users-api/health/ping',
+      urlPattern: `${urlPrefix}/health/ping`,
     },
     response: {
       status: 200,
