@@ -1,4 +1,5 @@
 {% extends "../partials/layout.njk" %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
 
 {% set pageTitle = applicationName + " - Home" %}
 {% set mainClasses = "app-container govuk-body" %}
@@ -14,9 +15,14 @@
 <div class="govuk-grid-row hmpps-three-quarters-responsive">
   <div class="govuk-grid-column-three-quarters">
     {% if latestFileName %}
-      <a class="button button-start" target="_blank" href="{{ latestFileName }}" role="button">Download</a>
+      {{ govukButton({
+        text: "Download",
+        href: "/" + latestFileName,
+        isStartButton: true,
+        attributes: { "data-qa": "download", "target": "_blank" }
+      }) }}
     {% else %}
-      No files found for download.
+        <span data-qa="no-files">No files found for download.</span>
     {% endif %}
   </div>
 </div>

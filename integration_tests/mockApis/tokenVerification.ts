@@ -1,12 +1,14 @@
 import { SuperAgentRequest } from 'superagent'
 import { stubFor } from './wiremock'
 
+const urlPrefix = '/verification'
+
 export default {
   stubTokenVerificationPing: (httpStatus = 200): SuperAgentRequest =>
     stubFor({
       request: {
         method: 'GET',
-        urlPattern: '/verification/health/ping',
+        urlPattern: `${urlPrefix}/health/ping`,
       },
       response: {
         status: httpStatus,
@@ -18,7 +20,7 @@ export default {
     stubFor({
       request: {
         method: 'POST',
-        urlPattern: '/verification/token/verify',
+        urlPattern: `${urlPrefix}/token/verify`,
       },
       response: {
         status: 200,
