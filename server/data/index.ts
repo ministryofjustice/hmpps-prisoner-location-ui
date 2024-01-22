@@ -10,7 +10,7 @@ const applicationInfo = applicationInfoSupplier()
 initialiseAppInsights()
 buildAppInsightsClient(applicationInfo)
 
-import HmppsAuthClient from './hmppsAuthClient'
+import hmppsAuthClient from './hmppsAuthClient'
 import ManageUsersApiClient from './manageUsersApiClient'
 import PrisonerDownloadApiClient from './prisonerDownloadApiClient'
 import { createRedisClient } from './redisClient'
@@ -18,17 +18,13 @@ import RedisTokenStore from './tokenStore/redisTokenStore'
 import InMemoryTokenStore from './tokenStore/inMemoryTokenStore'
 import config from '../config'
 
-type RestClientBuilder<T> = (token: string) => T
-
-export const dataAccess = () => ({
+export const dataAccess = {
   applicationInfo,
-  hmppsAuthClient: new HmppsAuthClient(
+  getSystemToken: hmppsAuthClient(
     config.redis.enabled ? new RedisTokenStore(createRedisClient()) : new InMemoryTokenStore(),
   ),
   manageUsersApiClient: new ManageUsersApiClient(),
   prisonerDownloadApiClient: new PrisonerDownloadApiClient(),
-})
+}
 
-export type DataAccess = ReturnType<typeof dataAccess>
-
-export { RestClientBuilder, ManageUsersApiClient, PrisonerDownloadApiClient }
+export { ManageUsersApiClient, PrisonerDownloadApiClient }

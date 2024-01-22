@@ -1,8 +1,8 @@
 import nock from 'nock'
 
 import config from '../config'
-import HmppsAuthClient from './hmppsAuthClient'
 import TokenStore from './tokenStore/redisTokenStore'
+import hmppsAuthClient from './hmppsAuthClient'
 
 jest.mock('./tokenStore/redisTokenStore')
 
@@ -13,11 +13,10 @@ const token = { access_token: 'token-1', expires_in: 300 }
 
 describe('hmppsAuthClient', () => {
   let fakeHmppsAuthApi: nock.Scope
-  let hmppsAuthClient: HmppsAuthClient
+  const getSystemToken = hmppsAuthClient(tokenStore)
 
   beforeEach(() => {
     fakeHmppsAuthApi = nock(config.apis.hmppsAuth.url)
-    hmppsAuthClient = new HmppsAuthClient(tokenStore)
   })
 
   afterEach(() => {
@@ -28,12 +27,12 @@ describe('hmppsAuthClient', () => {
   describe('getSystemClientToken', () => {
     it('should instantiate the redis client', async () => {
       tokenStore.getToken.mockResolvedValue(token.access_token)
-      await hmppsAuthClient.getSystemClientToken(username)
+      await getSystemToken(username)
     })
 
     it('should return token from redis if one exists', async () => {
       tokenStore.getToken.mockResolvedValue(token.access_token)
-      const output = await hmppsAuthClient.getSystemClientToken(username)
+      const output = await getSystemToken(username)
       expect(output).toEqual(token.access_token)
     })
 
@@ -46,7 +45,7 @@ describe('hmppsAuthClient', () => {
         .matchHeader('Content-Type', 'application/x-www-form-urlencoded')
         .reply(200, token)
 
-      const output = await hmppsAuthClient.getSystemClientToken(username)
+      const output = await getSystemToken(username)
 
       expect(output).toEqual(token.access_token)
       expect(tokenStore.setToken).toBeCalledWith('Bob', token.access_token, 240)
@@ -61,7 +60,7 @@ describe('hmppsAuthClient', () => {
         .matchHeader('Content-Type', 'application/x-www-form-urlencoded')
         .reply(200, token)
 
-      const output = await hmppsAuthClient.getSystemClientToken()
+      const output = await getSystemToken()
 
       expect(output).toEqual(token.access_token)
       expect(tokenStore.setToken).toBeCalledWith('%ANONYMOUS%', token.access_token, 240)
