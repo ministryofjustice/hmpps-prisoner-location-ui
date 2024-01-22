@@ -1,4 +1,4 @@
-import type { Download } from '../data/prisonerDownloadApiClient'
+import type { Download, Downloads } from '../data/prisonerDownloadApiClient'
 import PrisonerDownloadApiClient from '../data/prisonerDownloadApiClient'
 
 export default class PrisonerDownloadService {
@@ -6,5 +6,9 @@ export default class PrisonerDownloadService {
 
   async todaysFile(token: string): Promise<Download> {
     return this.prisonerDownloadApiClient.todaysFile(token)
+  }
+
+  async historicFiles(token: string): Promise<Downloads> {
+    return this.prisonerDownloadApiClient.historicFiles(token)
   }
 }

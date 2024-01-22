@@ -6,25 +6,28 @@
 
 {% block content %}
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-three-quarters">
-    <h1>Download NOMIS Report</h1>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+      <h1>Download NOMIS Report</h1>
+    </div>
   </div>
-</div>
 
-<div class="govuk-grid-row hmpps-three-quarters-responsive">
-  <div class="govuk-grid-column-three-quarters">
-    {% if latestFileName %}
-      {{ govukButton({
-        text: "Download",
-        href: "/" + latestFileName,
-        isStartButton: true,
-        attributes: { "data-qa": "download", "target": "_blank" }
-      }) }}
-    {% else %}
-        <span data-qa="no-files">No files found for download.</span>
-    {% endif %}
+  <div class="govuk-grid-row hmpps-three-quarters-responsive">
+    <div class="govuk-grid-column-three-quarters">
+      {% if latestFileName %}
+        {{ govukButton({
+          text: "Download",
+          href: "/" + latestFileName,
+          isStartButton: true,
+          attributes: { "data-qa": "download", "target": "_blank" }
+        }) }}
+      {% else %}
+        <p data-qa="no-files">No files found for download.</p>
+      {% endif %}
+    </div>
+    <div class="govuk-grid-column-three-quarters">
+      <a href="/historic-reports" class="govuk-link" data-qa="historic">NOMIS Reports for the last 14 days</a>
+    </div>
   </div>
-</div>
 
 {% endblock %}

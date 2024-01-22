@@ -29,6 +29,21 @@ const stubTodaysFile = (filename: string = 'today.zip') =>
     },
   })
 
+const stubHistoricFiles = (filenames: string[] = ['today.zip']) =>
+  stubFor({
+    request: {
+      method: 'GET',
+      urlPattern: `${urlPrefix}/list`,
+    },
+    response: {
+      status: 200,
+      headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+      jsonBody: {
+        files: filenames.map(f => ({ name: f, size: 100 })),
+      },
+    },
+  })
+
 const stubTodaysFileMissing = () =>
   stubFor({
     request: {
@@ -42,4 +57,5 @@ export default {
   stubPrisonerDownloadPing: ping,
   stubTodaysFile,
   stubTodaysFileMissing,
+  stubHistoricFiles,
 }

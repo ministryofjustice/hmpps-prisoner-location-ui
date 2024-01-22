@@ -1,5 +1,6 @@
 import IndexPage from '../pages/index'
 import Page from '../pages/page'
+import HistoricPage from '../pages/historic'
 
 context('Index', () => {
   beforeEach(() => {
@@ -22,5 +23,14 @@ context('Index', () => {
     const indexPage = Page.verifyOnPage(IndexPage)
     indexPage.downloadLink().should('not.exist')
     indexPage.noFiles().should('exist').should('have.text', 'No files found for download.')
+  })
+
+  it('Will allow user to access historical reports', () => {
+    cy.signIn()
+    const indexPage = Page.verifyOnPage(IndexPage)
+
+    cy.task('stubHistoricFiles')
+    indexPage.historic().click()
+    Page.verifyOnPage(HistoricPage)
   })
 })

@@ -34,4 +34,18 @@ describe('prisonerDownloadApiClient', () => {
       expect(output).toEqual(response)
     })
   })
+
+  describe('historicFiles', () => {
+    it('should return data from api', async () => {
+      const response = { data: 'data' }
+
+      fakePrisonerDownloadApiClient
+        .get('/list')
+        .matchHeader('authorization', `Bearer ${token.access_token}`)
+        .reply(200, response)
+
+      const output = await prisonerDownloadApiClient.historicFiles(token.access_token)
+      expect(output).toEqual(response)
+    })
+  })
 })
