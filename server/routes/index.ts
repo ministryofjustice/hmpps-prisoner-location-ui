@@ -2,6 +2,7 @@ import { type RequestHandler, Router } from 'express'
 
 import asyncMiddleware from '../middleware/asyncMiddleware'
 import type { Services } from '../services'
+import { ApiAction } from '../services/auditService'
 
 export default function routes(service: Services): Router {
   const router = Router()
@@ -18,8 +19,18 @@ export default function routes(service: Services): Router {
     res.render('pages/historic', { nomisReports: downloads?.files })
   })
   get('/download/:filename', async (req, res, next) => {
+    const { filename } = req.params
+
+    // want the audit to be async anyway so is a fire and forget
+    // noinspection ES6MissingAwait
+    service.auditService.sendEvent({
+      who: res.locals.user.username,
+      subjectId: filename,
+      correlationId: req.id,
+      what: `API_${ApiAction.Download}`,
+    })
     const { clientToken } = res.locals
-    const download = await service.prisonerDownloadService.download(clientToken, req.params.filename)
+    const download = await service.prisonerDownloadService.download(clientToken, filename)
     res.type('application/x-zip-compressed')
     download.pipe(res)
   })
