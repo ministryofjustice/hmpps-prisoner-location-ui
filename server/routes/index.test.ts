@@ -4,15 +4,17 @@ import { Readable } from 'stream'
 import { appWithAllRoutes } from './testutils/appSetup'
 import PrisonerDownloadService from '../services/prisonerDownloadService'
 import { Download, Downloads } from '../data/prisonerDownloadApiClient'
+import type { AuditService } from '../services/auditService'
 
 jest.mock('../services/prisonerDownloadService.ts')
 
 const prisonerDownloadService = new PrisonerDownloadService(null) as jest.Mocked<PrisonerDownloadService>
+const auditServiceMock: AuditService = { sendEvent: jest.fn() }
 
 let app: Express
 
 beforeEach(() => {
-  app = appWithAllRoutes({ services: { prisonerDownloadService } })
+  app = appWithAllRoutes({ services: { prisonerDownloadService, auditService: auditServiceMock } })
 })
 
 afterEach(() => {
@@ -76,15 +78,28 @@ describe('GET /download', () => {
       })
     expect(prisonerDownloadService.download).toHaveBeenCalledWith(undefined, 'file.zip')
   })
-  // TODO: Add back in test
-  it.skip('should render no files found if download not available', () => {
-    prisonerDownloadService.download.mockResolvedValue(null)
+  it('should render not found page if download not available', () => {
+    prisonerDownloadService.download.mockRejectedValue(new Error('Not Found'))
     return request(app)
       .get('/download/file.zip')
       .expect('Content-Type', /html/)
       .expect(res => {
-        expect(res.text).not.toContain('hello.zip')
-        expect(res.text).toContain('No NOMIS Reports found')
+        expect(res.text).toContain('Not Found')
       })
+  })
+  it('should send event to audit service', async () => {
+    prisonerDownloadService.download.mockResolvedValue(Readable.from('john smith'))
+    await request(app)
+      .get('/download/file.zip')
+      .expect('Content-Type', /x-zip/)
+      .expect(res => {
+        expect(res.text).toContain('john smith')
+      })
+    expect(auditServiceMock.sendEvent).toHaveBeenCalledWith({
+      correlationId: undefined,
+      subjectId: 'file.zip',
+      who: 'user1',
+      what: 'API_DOWNLOAD',
+    })
   })
 })
