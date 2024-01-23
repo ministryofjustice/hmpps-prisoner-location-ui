@@ -21,9 +21,8 @@
           {% set button %}
             {{ govukButton({
               text: "Download",
-              href: "/" + report.name,
-              isStartButton: true,
-              attributes: { "data-qa": "download" + loop.index, "target": "_blank" }
+              href: "/download/" + report.name,
+              attributes: { "data-qa": "download" + loop.index }
             }) }}
           {% endset %}
           {% set rows = (rows.push([

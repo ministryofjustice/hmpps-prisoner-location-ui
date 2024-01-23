@@ -48,4 +48,15 @@ describe('prisonerDownloadApiClient', () => {
       expect(output).toEqual(response)
     })
   })
+
+  describe('download', () => {
+    it('should return data from api', async () => {
+      fakePrisonerDownloadApiClient
+        .get('/download/file.zip')
+        .matchHeader('authorization', `Bearer ${token.access_token}`)
+        .reply(200, 'some response', { 'Content-Type': 'application/x-zip-compressed' })
+      const stream = await prisonerDownloadApiClient.download(token.access_token, 'file.zip')
+      expect(stream.read()).toEqual(Buffer.from('some response'))
+    })
+  })
 })

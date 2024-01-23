@@ -2,7 +2,7 @@ import IndexPage from '../pages/index'
 import Page from '../pages/page'
 import HistoricPage from '../pages/historic'
 
-context('Index', () => {
+context('Historic files', () => {
   beforeEach(() => {
     cy.task('reset')
     cy.task('stubSignIn', ['ROLE_PRISONER_DOWNLOAD'])
@@ -14,7 +14,7 @@ context('Index', () => {
     cy.signIn()
     Page.verifyOnPage(IndexPage).historic().click()
     const historicPage = Page.verifyOnPage(HistoricPage)
-    historicPage.downloadLink(1).should('exist').should('have.attr', 'href', '/today.zip')
+    historicPage.downloadLink(1).should('exist').should('have.attr', 'href', '/download/today.zip')
     historicPage.noFiles().should('not.exist')
   })
 
@@ -23,8 +23,8 @@ context('Index', () => {
     cy.signIn()
     Page.verifyOnPage(IndexPage).historic().click()
     const historicPage = Page.verifyOnPage(HistoricPage)
-    historicPage.downloadLink(1).should('exist').should('have.attr', 'href', '/today.zip')
-    historicPage.downloadLink(2).should('exist').should('have.attr', 'href', '/yesterday.zip')
+    historicPage.downloadLink(1).should('exist').should('have.attr', 'href', '/download/today.zip')
+    historicPage.downloadLink(2).should('exist').should('have.attr', 'href', '/download/yesterday.zip')
     historicPage.noFiles().should('not.exist')
   })
 

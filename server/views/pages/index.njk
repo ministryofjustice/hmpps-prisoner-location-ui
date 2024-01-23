@@ -17,9 +17,9 @@
       {% if latestFileName %}
         {{ govukButton({
           text: "Download",
-          href: "/" + latestFileName,
+          href: "/download/" + latestFileName,
           isStartButton: true,
-          attributes: { "data-qa": "download", "target": "_blank" }
+          attributes: { "data-qa": "download" }
         }) }}
       {% else %}
         <p data-qa="no-files">No files found for download.</p>

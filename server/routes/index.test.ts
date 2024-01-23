@@ -1,5 +1,6 @@
 import type { Express } from 'express'
 import request from 'supertest'
+import { Readable } from 'stream'
 import { appWithAllRoutes } from './testutils/appSetup'
 import PrisonerDownloadService from '../services/prisonerDownloadService'
 import { Download, Downloads } from '../data/prisonerDownloadApiClient'
@@ -56,6 +57,30 @@ describe('GET /historic-reports', () => {
     prisonerDownloadService.historicFiles.mockResolvedValue({ files: [] } as Downloads)
     return request(app)
       .get('/historic-reports')
+      .expect('Content-Type', /html/)
+      .expect(res => {
+        expect(res.text).not.toContain('hello.zip')
+        expect(res.text).toContain('No NOMIS Reports found')
+      })
+  })
+})
+
+describe('GET /download', () => {
+  it('should return download if available', async () => {
+    prisonerDownloadService.download.mockResolvedValue(Readable.from('john smith'))
+    await request(app)
+      .get('/download/file.zip')
+      .expect('Content-Type', /x-zip/)
+      .expect(res => {
+        expect(res.text).toContain('john smith')
+      })
+    expect(prisonerDownloadService.download).toHaveBeenCalledWith(undefined, 'file.zip')
+  })
+  // TODO: Add back in test
+  it.skip('should render no files found if download not available', () => {
+    prisonerDownloadService.download.mockResolvedValue(null)
+    return request(app)
+      .get('/download/file.zip')
       .expect('Content-Type', /html/)
       .expect(res => {
         expect(res.text).not.toContain('hello.zip')

@@ -53,9 +53,32 @@ const stubTodaysFileMissing = () =>
     response: { status: 404 },
   })
 
+const stubDownload = (filename: string = 'today.zip') =>
+  stubFor({
+    request: {
+      method: 'GET',
+      urlPattern: `${urlPrefix}/download/${filename}`,
+    },
+    response: {
+      status: 200,
+      headers: { 'Content-Type': 'application/x-zip-compressed' },
+      body: 'today file response content',
+    },
+  })
+const stubDownloadMissing = (filename: string = 'today.zip') =>
+  stubFor({
+    request: {
+      method: 'GET',
+      urlPattern: `${urlPrefix}/download/${filename}`,
+    },
+    response: { status: 404 },
+  })
+
 export default {
   stubPrisonerDownloadPing: ping,
   stubTodaysFile,
   stubTodaysFileMissing,
   stubHistoricFiles,
+  stubDownload,
+  stubDownloadMissing,
 }

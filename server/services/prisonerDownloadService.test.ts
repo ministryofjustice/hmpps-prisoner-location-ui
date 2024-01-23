@@ -1,3 +1,4 @@
+import { Readable } from 'stream'
 import PrisonerDownloadService from './prisonerDownloadService'
 import PrisonerDownloadApiClient, { type Download, Downloads } from '../data/prisonerDownloadApiClient'
 import createUserToken from '../testutils/createUserToken'
@@ -51,6 +52,29 @@ describe('Prisoner Download service', () => {
       prisonerDownloadApiClient.historicFiles.mockRejectedValue(new Error('some error'))
 
       await expect(prisonerDownloadService.historicFiles(token)).rejects.toEqual(new Error('some error'))
+    })
+  })
+
+  describe('download', () => {
+    beforeEach(() => {
+      prisonerDownloadApiClient = new PrisonerDownloadApiClient() as jest.Mocked<PrisonerDownloadApiClient>
+      prisonerDownloadService = new PrisonerDownloadService(prisonerDownloadApiClient)
+    })
+
+    it("Retrieves today's file", async () => {
+      const token = createUserToken([])
+      prisonerDownloadApiClient.download.mockResolvedValue(Readable.from('john smith'))
+
+      const result = await prisonerDownloadService.download(token, 'file.zip')
+
+      expect(result.read()).toEqual('john smith')
+    })
+
+    it('Propagates error', async () => {
+      const token = createUserToken([])
+      prisonerDownloadApiClient.download.mockRejectedValue(new Error('some error'))
+
+      await expect(prisonerDownloadService.download(token, 'file.zip')).rejects.toEqual(new Error('some error'))
     })
   })
 })
