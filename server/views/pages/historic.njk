@@ -1,0 +1,42 @@
+{% extends "../partials/layout.njk" %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/table/macro.njk" import govukTable %}
+
+{% set pageTitle = applicationName + " - Home" %}
+{% set mainClasses = "app-container govuk-body" %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+      <h1>NOMIS Reports from the last 14 days</h1>
+    </div>
+  </div>
+
+  <div class="govuk-grid-row hmpps-three-quarters-responsive">
+    <div class="govuk-grid-column-three-quarters">
+      {% if nomisReports.length %}
+        {% set rows = [] %}
+        {% for report in nomisReports %}
+          {% set button %}
+            {{ govukButton({
+              text: "Download",
+              href: "/" + report.name,
+              isStartButton: true,
+              attributes: { "data-qa": "download" + loop.index, "target": "_blank" }
+            }) }}
+          {% endset %}
+          {% set rows = (rows.push([
+            { text: report.name },
+            { html: button }
+          ]), rows) %}
+        {% endfor %}
+
+        {{ govukTable({ rows: rows }) }}
+      {% else %}
+        <span data-qa="no-files">No NOMIS Reports found for the last 14 days.</span>
+      {% endif %}
+    </div>
+  </div>
+
+{% endblock %}

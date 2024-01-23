@@ -7,6 +7,9 @@ export interface Download {
   size: number
   lastModified: string
 }
+export interface Downloads {
+  files: Download[]
+}
 
 export default class PrisonerDownloadApiClient {
   constructor() {}
@@ -18,5 +21,10 @@ export default class PrisonerDownloadApiClient {
   todaysFile(token: string): Promise<Download> {
     logger.info("Getting today's file: calling HMPPS Prisoner Download Api")
     return PrisonerDownloadApiClient.restClient(token).get<Download>({ path: '/today', ignore404: true })
+  }
+
+  historicFiles(token: string): Promise<Downloads> {
+    logger.info('Getting historic files: calling HMPPS Prisoner Download Api')
+    return PrisonerDownloadApiClient.restClient(token).get<Downloads>({ path: '/list' })
   }
 }

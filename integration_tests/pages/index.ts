@@ -12,4 +12,6 @@ export default class IndexPage extends Page {
   downloadLink = (): PageElement => cy.get('[data-qa=download]')
 
   noFiles = (): PageElement => cy.get('[data-qa=no-files]')
+
+  historic = (): PageElement => cy.get('[data-qa=historic]')
 }
