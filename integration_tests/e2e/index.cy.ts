@@ -2,7 +2,7 @@ import IndexPage from '../pages/index'
 import Page from '../pages/page'
 import HistoricPage from '../pages/historic'
 
-context('Index', () => {
+context("Today's file", () => {
   beforeEach(() => {
     cy.task('reset')
     cy.task('stubSignIn', ['ROLE_PRISONER_DOWNLOAD'])
@@ -13,7 +13,7 @@ context('Index', () => {
     cy.task('stubTodaysFile')
     cy.signIn()
     const indexPage = Page.verifyOnPage(IndexPage)
-    indexPage.downloadLink().should('exist').should('have.attr', 'href', '/today.zip')
+    indexPage.downloadLink().should('exist').should('have.attr', 'href', '/download/today.zip')
     indexPage.noFiles().should('not.exist')
   })
 

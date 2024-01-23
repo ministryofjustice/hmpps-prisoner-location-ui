@@ -17,6 +17,12 @@ export default function routes(service: Services): Router {
     const downloads = await service.prisonerDownloadService.historicFiles(clientToken)
     res.render('pages/historic', { nomisReports: downloads?.files })
   })
+  get('/download/:filename', async (req, res, next) => {
+    const { clientToken } = res.locals
+    const download = await service.prisonerDownloadService.download(clientToken, req.params.filename)
+    res.type('application/x-zip-compressed')
+    download.pipe(res)
+  })
 
   return router
 }

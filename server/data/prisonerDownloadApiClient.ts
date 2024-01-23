@@ -1,4 +1,4 @@
-import logger from '../../logger'
+import { Readable } from 'stream'
 import config from '../config'
 import RestClient from './restClient'
 
@@ -19,12 +19,14 @@ export default class PrisonerDownloadApiClient {
   }
 
   todaysFile(token: string): Promise<Download> {
-    logger.info("Getting today's file: calling HMPPS Prisoner Download Api")
     return PrisonerDownloadApiClient.restClient(token).get<Download>({ path: '/today', ignore404: true })
   }
 
   historicFiles(token: string): Promise<Downloads> {
-    logger.info('Getting historic files: calling HMPPS Prisoner Download Api')
     return PrisonerDownloadApiClient.restClient(token).get<Downloads>({ path: '/list' })
+  }
+
+  download(token: string, filename: string): Promise<Readable> {
+    return PrisonerDownloadApiClient.restClient(token).stream({ path: `/download/${filename}` })
   }
 }

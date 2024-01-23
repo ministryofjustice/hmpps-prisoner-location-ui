@@ -1,3 +1,4 @@
+import { Readable } from 'stream'
 import type { Download, Downloads } from '../data/prisonerDownloadApiClient'
 import PrisonerDownloadApiClient from '../data/prisonerDownloadApiClient'
 
@@ -10,5 +11,9 @@ export default class PrisonerDownloadService {
 
   async historicFiles(token: string): Promise<Downloads> {
     return this.prisonerDownloadApiClient.historicFiles(token)
+  }
+
+  async download(token: string, filename: string): Promise<Readable> {
+    return this.prisonerDownloadApiClient.download(token, filename)
   }
 }
