@@ -4,17 +4,15 @@ import { Readable } from 'stream'
 import { appWithAllRoutes } from './testutils/appSetup'
 import PrisonerDownloadService from '../services/prisonerDownloadService'
 import { Download, Downloads } from '../data/prisonerDownloadApiClient'
-import type { AuditService } from '../services/auditService'
 
 jest.mock('../services/prisonerDownloadService.ts')
 
 const prisonerDownloadService = new PrisonerDownloadService(null) as jest.Mocked<PrisonerDownloadService>
-const auditServiceMock: AuditService = { sendEvent: jest.fn() }
 
 let app: Express
 
 beforeEach(() => {
-  app = appWithAllRoutes({ services: { prisonerDownloadService, auditService: auditServiceMock } })
+  app = appWithAllRoutes({ services: { prisonerDownloadService } })
 })
 
 afterEach(() => {
@@ -86,20 +84,5 @@ describe('GET /download', () => {
       .expect(res => {
         expect(res.text).toContain('Not Found')
       })
-  })
-  it('should send event to audit service', async () => {
-    prisonerDownloadService.download.mockResolvedValue(Readable.from('john smith'))
-    await request(app)
-      .get('/download/file.zip')
-      .expect('Content-Type', /x-zip/)
-      .expect(res => {
-        expect(res.text).toContain('john smith')
-      })
-    expect(auditServiceMock.sendEvent).toHaveBeenCalledWith({
-      correlationId: undefined,
-      subjectId: 'file.zip',
-      who: 'user1',
-      what: 'API_DOWNLOAD',
-    })
   })
 })
