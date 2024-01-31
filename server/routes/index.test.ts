@@ -27,17 +27,17 @@ describe('GET /', () => {
       .expect('Content-Type', /html/)
       .expect(res => {
         expect(res.text).toContain('hello.zip')
-        expect(res.text).not.toContain('No files found')
+        expect(res.text).not.toContain('No report for today')
       })
   })
-  it('should render no files found if download not available', () => {
+  it('should render no report found if download not available', () => {
     prisonerDownloadService.todaysFile.mockResolvedValue(null)
     return request(app)
       .get('/')
       .expect('Content-Type', /html/)
       .expect(res => {
         expect(res.text).not.toContain('hello.zip')
-        expect(res.text).toContain('No files found')
+        expect(res.text).toContain('No report for today')
       })
   })
 })
