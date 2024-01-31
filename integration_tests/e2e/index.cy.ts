@@ -22,7 +22,7 @@ context("Today's file", () => {
     cy.task('stubTodaysFileMissing')
     const indexPage = Page.verifyOnPage(IndexPage)
     indexPage.downloadLink().should('not.exist')
-    indexPage.noFiles().should('exist').should('have.text', 'No files found for download.')
+    indexPage.noFiles().should('exist').should('have.text', 'No report for today is available at present.')
   })
 
   it('Will allow user to access historical reports', () => {
