@@ -36,4 +36,13 @@ context('Historic files', () => {
     historicPage.downloadLink(1).should('not.exist')
     historicPage.noFiles().should('exist').should('have.text', 'No NOMIS Reports found for the last 14 days.')
   })
+
+  it('Will provide link back to home', () => {
+    cy.signIn()
+    cy.task('stubHistoricFiles', [])
+    Page.verifyOnPage(IndexPage).historic().click()
+    const historicPage = Page.verifyOnPage(HistoricPage)
+    historicPage.homeLink().click()
+    Page.verifyOnPage(IndexPage)
+  })
 })
