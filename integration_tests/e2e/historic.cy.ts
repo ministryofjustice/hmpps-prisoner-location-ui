@@ -42,7 +42,7 @@ context('Historic files', () => {
     cy.task('stubHistoricFiles', [])
     Page.verifyOnPage(IndexPage).historic().click()
     const historicPage = Page.verifyOnPage(HistoricPage)
-    historicPage.homeLink().click()
+    historicPage.backLink().click()
     Page.verifyOnPage(IndexPage)
   })
 })

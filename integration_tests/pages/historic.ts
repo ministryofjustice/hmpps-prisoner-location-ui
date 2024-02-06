@@ -7,7 +7,7 @@ export default class HistoricPage extends Page {
 
   downloadLink = (index: number): PageElement => cy.get(`[data-qa=download${index}]`)
 
-  homeLink = (): PageElement => cy.contains('a', 'Home')
+  backLink = (): PageElement => cy.contains('a', 'Back')
 
   noFiles = (): PageElement => cy.get('[data-qa=no-files]')
 }
