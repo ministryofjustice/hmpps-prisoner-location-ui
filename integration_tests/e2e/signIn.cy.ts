@@ -7,7 +7,7 @@ import AuthErrorPage from '../pages/authError'
 context('Sign In', () => {
   beforeEach(() => {
     cy.task('reset')
-    cy.task('stubSignIn', ['ROLE_PRISONER_LOCATION'])
+    cy.task('stubSignIn', ['ROLE_PRISONER_LOCATION_DOWNLOAD'])
     cy.task('stubManageUser')
   })
 
