@@ -12,7 +12,7 @@ buildAppInsightsClient(applicationInfo)
 
 import hmppsAuthClient from './hmppsAuthClient'
 import ManageUsersApiClient from './manageUsersApiClient'
-import PrisonerDownloadApiClient from './prisonerDownloadApiClient'
+import PrisonerLocationApiClient from './prisonerLocationApiClient'
 import { createRedisClient } from './redisClient'
 import RedisTokenStore from './tokenStore/redisTokenStore'
 import InMemoryTokenStore from './tokenStore/inMemoryTokenStore'
@@ -24,7 +24,7 @@ export const dataAccess = {
     config.redis.enabled ? new RedisTokenStore(createRedisClient()) : new InMemoryTokenStore(),
   ),
   manageUsersApiClient: new ManageUsersApiClient(),
-  prisonerDownloadApiClient: new PrisonerDownloadApiClient(),
+  prisonerLocationApiClient: new PrisonerLocationApiClient(),
 }
 
-export { ManageUsersApiClient, PrisonerDownloadApiClient }
+export { ManageUsersApiClient, PrisonerLocationApiClient }

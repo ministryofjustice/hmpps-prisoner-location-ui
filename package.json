@@ -1,8 +1,8 @@
 {
-  "name": "hmpps-prisoner-download",
+  "name": "hmpps-prisoner-location",
   "version": "0.0.1",
-  "description": "Hmpps Prisoner Download",
-  "repository": "git@github.com:ministryofjustice/hmpps-prisoner-download.git",
+  "description": "Hmpps Prisoner Location",
+  "repository": "git@github.com:ministryofjustice/hmpps-prisoner-location.git",
   "license": "MIT",
   "scripts": {
     "prepare": "husky install",

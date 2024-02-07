@@ -9,19 +9,19 @@ export default function routes(service: Services): Router {
 
   get('/', async (req, res, next) => {
     const { clientToken } = res.locals
-    const download = await service.prisonerDownloadService.todaysFile(clientToken)
+    const download = await service.prisonerLocationService.todaysFile(clientToken)
     res.render('pages/index', { latestFileName: download?.name })
   })
   get('/historic-reports', async (req, res, next) => {
     const { clientToken } = res.locals
-    const downloads = await service.prisonerDownloadService.historicFiles(clientToken)
+    const downloads = await service.prisonerLocationService.historicFiles(clientToken)
     res.render('pages/historic', { nomisReports: downloads?.files })
   })
   get('/download/:filename', async (req, res, next) => {
     const { filename } = req.params
     const { clientToken } = res.locals
 
-    const download = await service.prisonerDownloadService.download(clientToken, filename)
+    const download = await service.prisonerLocationService.download(clientToken, filename)
     res.type('application/x-zip-compressed')
     download.pipe(res)
   })

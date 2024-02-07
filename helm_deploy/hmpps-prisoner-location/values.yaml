@@ -1,18 +1,18 @@
 generic-service:
-  nameOverride: hmpps-prisoner-download
+  nameOverride: hmpps-prisoner-location
   productId: "DPS057"
 
   replicaCount: 4
 
   image:
-    repository: quay.io/hmpps/hmpps-prisoner-download
+    repository: quay.io/hmpps/hmpps-prisoner-location
     tag: app_version # override at deployment time
     port: 3000
 
   ingress:
     enabled: true
     host: app-hostname.local # override per environment
-    tlsSecretName: prisoner-download-cert
+    tlsSecretName: prisoner-location-cert
     modsecurity_enabled: true
     modsecurity_snippet: |
       SecRuleEngine On
@@ -40,7 +40,7 @@ generic-service:
     APPLICATIONINSIGHTS_CONNECTION_STRING: "InstrumentationKey=$(APPINSIGHTS_INSTRUMENTATIONKEY);IngestionEndpoint=https://northeurope-0.in.applicationinsights.azure.com/;LiveEndpoint=https://northeurope.livediagnostics.monitor.azure.com/"
 
   namespace_secrets:
-    hmpps-prisoner-download:
+    hmpps-prisoner-location:
       APPINSIGHTS_INSTRUMENTATIONKEY: "APPINSIGHTS_INSTRUMENTATIONKEY"
       API_CLIENT_ID: "API_CLIENT_ID"
       API_CLIENT_SECRET: "API_CLIENT_SECRET"
@@ -56,5 +56,5 @@ generic-service:
       - internal
 
 generic-prometheus-alerts:
-  targetApplication: hmpps-prisoner-download
+  targetApplication: hmpps-prisoner-location
   alertSeverity: syscon

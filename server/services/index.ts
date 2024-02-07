@@ -1,14 +1,14 @@
 import { dataAccess } from '../data'
 import UserService from './userService'
-import PrisonerDownloadService from './prisonerDownloadService'
+import PrisonerLocationService from './prisonerLocationService'
 
 export const services = () => {
-  const { applicationInfo, manageUsersApiClient, prisonerDownloadApiClient } = dataAccess
+  const { applicationInfo, manageUsersApiClient, prisonerLocationApiClient } = dataAccess
 
   return {
     applicationInfo,
     userService: new UserService(manageUsersApiClient),
-    prisonerDownloadService: new PrisonerDownloadService(prisonerDownloadApiClient),
+    prisonerLocationService: new PrisonerLocationService(prisonerLocationApiClient),
   }
 }
 

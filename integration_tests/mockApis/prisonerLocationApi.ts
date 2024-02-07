@@ -1,6 +1,6 @@
 import { stubFor } from './wiremock'
 
-const urlPrefix = '/prisoner-download-api'
+const urlPrefix = '/prisoner-location-api'
 
 const ping = () =>
   stubFor({
@@ -75,7 +75,7 @@ const stubDownloadMissing = (filename: string = 'today.zip') =>
   })
 
 export default {
-  stubPrisonerDownloadPing: ping,
+  stubPrisonerLocationPing: ping,
   stubTodaysFile,
   stubTodaysFileMissing,
   stubHistoricFiles,

@@ -2,7 +2,7 @@ import { defineConfig } from 'cypress'
 import { resetStubs } from './integration_tests/mockApis/wiremock'
 import auth from './integration_tests/mockApis/auth'
 import manageUsersApi from './integration_tests/mockApis/manageUsersApi'
-import prisonerDownloadApi from './integration_tests/mockApis/prisonerDownloadApi'
+import prisonerLocationApi from './integration_tests/mockApis/prisonerLocationApi'
 import tokenVerification from './integration_tests/mockApis/tokenVerification'
 
 export default defineConfig({
@@ -21,7 +21,7 @@ export default defineConfig({
         reset: resetStubs,
         ...auth,
         ...manageUsersApi,
-        ...prisonerDownloadApi,
+        ...prisonerLocationApi,
         ...tokenVerification,
       })
     },
