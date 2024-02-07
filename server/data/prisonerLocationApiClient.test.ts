@@ -1,19 +1,19 @@
 import nock from 'nock'
 
 import config from '../config'
-import PrisonerDownloadApiClient from './prisonerDownloadApiClient'
+import PrisonerLocationApiClient from './prisonerLocationApiClient'
 
 jest.mock('./tokenStore/redisTokenStore')
 
 const token = { access_token: 'token-1', expires_in: 300 }
 
-describe('prisonerDownloadApiClient', () => {
-  let fakePrisonerDownloadApiClient: nock.Scope
-  let prisonerDownloadApiClient: PrisonerDownloadApiClient
+describe('prisonerLocationApiClient', () => {
+  let fakePrisonerLocationApiClient: nock.Scope
+  let prisonerLocationApiClient: PrisonerLocationApiClient
 
   beforeEach(() => {
-    fakePrisonerDownloadApiClient = nock(config.apis.prisonerDownloadApi.url)
-    prisonerDownloadApiClient = new PrisonerDownloadApiClient()
+    fakePrisonerLocationApiClient = nock(config.apis.prisonerLocationApi.url)
+    prisonerLocationApiClient = new PrisonerLocationApiClient()
   })
 
   afterEach(() => {
@@ -25,12 +25,12 @@ describe('prisonerDownloadApiClient', () => {
     it('should return data from api', async () => {
       const response = { data: 'data' }
 
-      fakePrisonerDownloadApiClient
+      fakePrisonerLocationApiClient
         .get('/today')
         .matchHeader('authorization', `Bearer ${token.access_token}`)
         .reply(200, response)
 
-      const output = await prisonerDownloadApiClient.todaysFile(token.access_token)
+      const output = await prisonerLocationApiClient.todaysFile(token.access_token)
       expect(output).toEqual(response)
     })
   })
@@ -39,23 +39,23 @@ describe('prisonerDownloadApiClient', () => {
     it('should return data from api', async () => {
       const response = { data: 'data' }
 
-      fakePrisonerDownloadApiClient
+      fakePrisonerLocationApiClient
         .get('/list')
         .matchHeader('authorization', `Bearer ${token.access_token}`)
         .reply(200, response)
 
-      const output = await prisonerDownloadApiClient.historicFiles(token.access_token)
+      const output = await prisonerLocationApiClient.historicFiles(token.access_token)
       expect(output).toEqual(response)
     })
   })
 
   describe('download', () => {
     it('should return data from api', async () => {
-      fakePrisonerDownloadApiClient
+      fakePrisonerLocationApiClient
         .get('/download/file.zip')
         .matchHeader('authorization', `Bearer ${token.access_token}`)
         .reply(200, 'some response', { 'Content-Type': 'application/x-zip-compressed' })
-      const stream = await prisonerDownloadApiClient.download(token.access_token, 'file.zip')
+      const stream = await prisonerLocationApiClient.download(token.access_token, 'file.zip')
       expect(stream.read()).toEqual(Buffer.from('some response'))
     })
   })

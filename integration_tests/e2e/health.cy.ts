@@ -4,7 +4,7 @@ context('Healthcheck', () => {
       cy.task('reset')
       cy.task('stubAuthPing')
       cy.task('stubManageUsersPing')
-      cy.task('stubPrisonerDownloadPing')
+      cy.task('stubPrisonerLocationPing')
       cy.task('stubTokenVerificationPing')
     })
 
@@ -12,9 +12,9 @@ context('Healthcheck', () => {
       cy.request('/health').its('body.status').should('equal', 'UP')
     })
 
-    it('Reports prisoner download UP', () => {
+    it('Reports prisoner location UP', () => {
       cy.request('/health').then(response => {
-        expect(response.body.components.prisonerDownloadApi.status).to.equal('UP')
+        expect(response.body.components.prisonerLocationApi.status).to.equal('UP')
       })
     })
 
@@ -32,7 +32,7 @@ context('Healthcheck', () => {
       cy.task('reset')
       cy.task('stubAuthPing')
       cy.task('stubManageUsersPing')
-      cy.task('stubPrisonerDownloadPing')
+      cy.task('stubPrisonerLocationPing')
       cy.task('stubTokenVerificationPing', 500)
     })
 

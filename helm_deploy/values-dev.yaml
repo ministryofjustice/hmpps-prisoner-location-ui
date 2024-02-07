@@ -1,5 +1,5 @@
 ---
-# Per environment values which override defaults in hmpps-prisoner-download/values.yaml
+# Per environment values which override defaults in hmpps-prisoner-location/values.yaml
 
 generic-service:
   replicaCount: 2
@@ -10,14 +10,14 @@ generic-service:
     shutdown: '24 21 * * 1-5' # Stop at 9.24pm UTC Monday-Friday
 
   ingress:
-    host: prisoner-download-dev.prison.service.justice.gov.uk
+    host: prisoner-location-dev.prison.service.justice.gov.uk
 
   env:
-    INGRESS_URL: "https://prisoner-download-dev.prison.service.justice.gov.uk"
+    INGRESS_URL: "https://prisoner-location-dev.prison.service.justice.gov.uk"
     HMPPS_AUTH_URL: "https://sign-in-dev.hmpps.service.justice.gov.uk/auth"
     MANAGE_USERS_API_URL: "https://manage-users-api-dev.hmpps.service.justice.gov.uk"
     TOKEN_VERIFICATION_API_URL: "https://token-verification-api-dev.prison.service.justice.gov.uk"
-    PRISONER_DOWNLOAD_API_URL: "https://prisoner-download-api-dev.prison.service.justice.gov.uk"
+    PRISONER_LOCATION_API_URL: "https://prisoner-location-api-dev.prison.service.justice.gov.uk"
     ENVIRONMENT_NAME: DEV
 
 generic-prometheus-alerts:

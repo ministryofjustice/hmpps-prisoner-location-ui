@@ -9,7 +9,7 @@ context('Download files', () => {
 
   beforeEach(() => {
     cy.task('reset')
-    cy.task('stubSignIn', ['ROLE_PRISONER_DOWNLOAD'])
+    cy.task('stubSignIn', ['ROLE_PRISONER_LOCATION'])
     cy.task('stubManageUser')
   })
 

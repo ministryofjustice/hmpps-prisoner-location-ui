@@ -7,7 +7,7 @@ import AuthErrorPage from '../pages/authError'
 context('Sign In', () => {
   beforeEach(() => {
     cy.task('reset')
-    cy.task('stubSignIn', ['ROLE_PRISONER_DOWNLOAD'])
+    cy.task('stubSignIn', ['ROLE_PRISONER_LOCATION'])
     cy.task('stubManageUser')
   })
 
@@ -21,7 +21,7 @@ context('Sign In', () => {
     Page.verifyOnPage(AuthSignInPage)
   })
 
-  it('User without prisoner download role denied access', () => {
+  it('User without prisoner location role denied access', () => {
     cy.task('stubSignIn', ['ROLE_OTHER'])
 
     cy.signIn({ failOnStatusCode: false })

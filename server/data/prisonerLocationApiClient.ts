@@ -11,22 +11,22 @@ export interface Downloads {
   files: Download[]
 }
 
-export default class PrisonerDownloadApiClient {
+export default class PrisonerLocationApiClient {
   constructor() {}
 
   private static restClient(token: string): RestClient {
-    return new RestClient('Prisoner Download Api Client', config.apis.prisonerDownloadApi, token)
+    return new RestClient('Prisoner Location Api Client', config.apis.prisonerLocationApi, token)
   }
 
   todaysFile(token: string): Promise<Download> {
-    return PrisonerDownloadApiClient.restClient(token).get<Download>({ path: '/today', ignore404: true })
+    return PrisonerLocationApiClient.restClient(token).get<Download>({ path: '/today', ignore404: true })
   }
 
   historicFiles(token: string): Promise<Downloads> {
-    return PrisonerDownloadApiClient.restClient(token).get<Downloads>({ path: '/list' })
+    return PrisonerLocationApiClient.restClient(token).get<Downloads>({ path: '/list' })
   }
 
   download(token: string, filename: string): Promise<Readable> {
-    return PrisonerDownloadApiClient.restClient(token).stream({ path: `/download/${filename}` })
+    return PrisonerLocationApiClient.restClient(token).stream({ path: `/download/${filename}` })
   }
 }
