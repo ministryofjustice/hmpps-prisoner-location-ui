@@ -14,3 +14,7 @@ generic-service:
     TOKEN_VERIFICATION_API_URL: "https://token-verification-api-preprod.prison.service.justice.gov.uk"
     PRISONER_LOCATION_API_URL: "https://prisoner-location-api-preprod.prison.service.justice.gov.uk"
     ENVIRONMENT_NAME: PRE-PRODUCTION
+
+generic-prometheus-alerts:
+  businessHoursOnly: true
+  alertSeverity: syscon-nonprod
