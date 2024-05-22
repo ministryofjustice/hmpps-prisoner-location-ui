@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  hmpps: ministryofjustice/hmpps@8
+  hmpps: ministryofjustice/hmpps@dev:a41ad11
   slack: circleci/slack@4.12.5
 
 parameters:
@@ -122,10 +122,6 @@ workflows:
           name: helm_lint
       - hmpps/build_docker:
           name: build_docker
-          filters:
-            branches:
-              only:
-                - main
       - hmpps/deploy_env:
           name: deploy_dev
           env: "dev"
@@ -156,9 +152,10 @@ workflows:
           pipeline_number: <<pipeline.number>>
           context:
             - hmpps-common-vars
-            - hmpps-prisoner-location-preprod
+            - syscon-devs-preprod
+          env_prefix: hmpps_prisoner_location
           requires:
-            - request-preprod-approval
+            - build_docker
           helm_timeout: 5m
       - request-prod-approval:
           type: approval
