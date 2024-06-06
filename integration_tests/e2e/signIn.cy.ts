@@ -7,8 +7,7 @@ import AuthErrorPage from '../pages/authError'
 context('Sign In', () => {
   beforeEach(() => {
     cy.task('reset')
-    cy.task('stubSignIn', ['ROLE_PRISONER_LOCATION_DOWNLOAD'])
-    cy.task('stubManageUser')
+    cy.task('stubSignIn', { roles: ['ROLE_PRISONER_LOCATION_DOWNLOAD'] })
   })
 
   it('Unauthenticated user directed to auth', () => {
@@ -22,7 +21,7 @@ context('Sign In', () => {
   })
 
   it('User without prisoner location role denied access', () => {
-    cy.task('stubSignIn', ['ROLE_OTHER'])
+    cy.task('stubSignIn', { roles: ['ROLE_OTHER'] })
 
     cy.signIn({ failOnStatusCode: false })
     Page.verifyOnPage(AuthErrorPage)
@@ -75,9 +74,8 @@ context('Sign In', () => {
     cy.request('/').its('body').should('contain', 'Sign in')
 
     cy.task('stubVerifyToken', true)
-    cy.task('stubManageUser', 'bobby brown')
     cy.signIn()
 
-    indexPage.headerUserName().contains('B. Brown')
+    indexPage.headerUserName().contains('J. Smith')
   })
 })
