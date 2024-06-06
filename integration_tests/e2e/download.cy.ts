@@ -9,8 +9,7 @@ context('Download files', () => {
 
   beforeEach(() => {
     cy.task('reset')
-    cy.task('stubSignIn', ['ROLE_PRISONER_LOCATION_DOWNLOAD'])
-    cy.task('stubManageUser')
+    cy.task('stubSignIn', { roles: ['ROLE_PRISONER_LOCATION_DOWNLOAD'] })
   })
 
   it("Will allow user to download today's file", () => {

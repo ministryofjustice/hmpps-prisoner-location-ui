@@ -5,8 +5,7 @@ import HistoricPage from '../pages/historic'
 context("Today's file", () => {
   beforeEach(() => {
     cy.task('reset')
-    cy.task('stubSignIn', ['ROLE_PRISONER_LOCATION_DOWNLOAD'])
-    cy.task('stubManageUser')
+    cy.task('stubSignIn', { roles: ['ROLE_PRISONER_LOCATION_DOWNLOAD'] })
   })
 
   it('Will provide link for user to download latest file', () => {
