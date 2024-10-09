@@ -85,6 +85,6 @@ export default {
       agent: new AgentConfig(Number(get('PRISONER_LOCATION_API_URL_TIMEOUT_RESPONSE', 10000))),
     },
   },
-  domain: get('INGRESS_URL', 'http://localhost:3000', requiredInProduction),
+  ingressUrl: get('INGRESS_URL', 'http://localhost:3000', requiredInProduction),
   environmentName: get('ENVIRONMENT_NAME', ''),
 }
