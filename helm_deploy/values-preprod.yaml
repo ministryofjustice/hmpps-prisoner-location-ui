@@ -17,3 +17,7 @@ generic-service:
 generic-prometheus-alerts:
   businessHoursOnly: true
   alertSeverity: syscon-nonprod
+
+  elastiCacheAlertsClusterIds:
+    cp-b80f6fd37631cc30-001: "HMPPS Prisoner Location ElastiCache Cluster Node 1"
+    cp-b80f6fd37631cc30-002: "HMPPS Prisoner Location ElastiCache Cluster Node 2"
