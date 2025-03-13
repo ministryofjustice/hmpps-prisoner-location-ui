@@ -1,8 +1,9 @@
 import { Readable } from 'stream'
 
-import Agent, { HttpsAgent } from 'agentkeepalive'
+import { HttpAgent, HttpsAgent } from 'agentkeepalive'
 import superagent from 'superagent'
 
+import type { Agent } from 'http'
 import logger from '../../logger'
 import sanitiseError from '../sanitisedError'
 import type { ApiConfig } from '../config'
@@ -36,7 +37,7 @@ export default class RestClient {
     private readonly config: ApiConfig,
     private readonly token: string,
   ) {
-    this.agent = config.url.startsWith('https') ? new HttpsAgent(config.agent) : new Agent(config.agent)
+    this.agent = config.url.startsWith('https') ? new HttpsAgent(config.agent) : new HttpAgent(config.agent)
   }
 
   private apiUrl() {
@@ -70,7 +71,7 @@ export default class RestClient {
         .responseType(responseType)
         .timeout(this.timeoutConfig())
 
-      return raw ? result : result.body
+      return raw ? (result as Response) : result.body
     } catch (error) {
       if (ignore404 && error.response?.status === 404) {
         logger.info(`Returned null for 404 not found when calling ${this.name}: ${path}`)
@@ -104,7 +105,7 @@ export default class RestClient {
         .responseType(responseType)
         .timeout(this.timeoutConfig())
 
-      return raw ? result : result.body
+      return raw ? (result as Response) : result.body
     } catch (error) {
       const sanitisedError = sanitiseError(error)
       logger.warn({ ...sanitisedError }, `Error calling ${this.name}, path: '${path}', verb: '${method.toUpperCase()}'`)
@@ -146,7 +147,7 @@ export default class RestClient {
         .responseType(responseType)
         .timeout(this.timeoutConfig())
 
-      return raw ? result : result.body
+      return raw ? (result as Response) : result.body
     } catch (error) {
       const sanitisedError = sanitiseError(error)
       logger.warn({ ...sanitisedError }, `Error calling ${this.name}, path: '${path}', verb: 'DELETE'`)
