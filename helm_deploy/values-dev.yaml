@@ -11,6 +11,7 @@ generic-service:
 
   ingress:
     host: prisoner-location-dev.prison.service.justice.gov.uk
+    className: modsec-non-prod
 
   env:
     INGRESS_URL: "https://prisoner-location-dev.prison.service.justice.gov.uk"
