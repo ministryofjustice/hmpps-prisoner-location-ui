@@ -2,7 +2,7 @@ import { dataAccess } from '../data'
 import PrisonerLocationService from './prisonerLocationService'
 
 export const services = () => {
-  const { applicationInfo, prisonerLocationApiClient } = dataAccess
+  const { applicationInfo, prisonerLocationApiClient } = dataAccess()
 
   return {
     applicationInfo,

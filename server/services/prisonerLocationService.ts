@@ -5,15 +5,15 @@ import PrisonerLocationApiClient from '../data/prisonerLocationApiClient'
 export default class PrisonerLocationService {
   constructor(private readonly prisonerLocationApiClient: PrisonerLocationApiClient) {}
 
-  async todaysFile(token: string): Promise<Download> {
-    return this.prisonerLocationApiClient.todaysFile(token)
+  async todaysFile(username: string): Promise<Download> {
+    return this.prisonerLocationApiClient.todaysFile(username)
   }
 
-  async historicFiles(token: string): Promise<Downloads> {
-    return this.prisonerLocationApiClient.historicFiles(token)
+  async historicFiles(username: string): Promise<Downloads> {
+    return this.prisonerLocationApiClient.historicFiles(username)
   }
 
-  async download(token: string, filename: string): Promise<Readable> {
-    return this.prisonerLocationApiClient.download(token, filename)
+  async download(username: string, filename: string): Promise<Readable> {
+    return this.prisonerLocationApiClient.download(username, filename)
   }
 }
