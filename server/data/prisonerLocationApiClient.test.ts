@@ -32,6 +32,18 @@ describe('prisonerLocationApiClient', () => {
 
       const output = await prisonerLocationApiClient.todaysFile(token.access_token)
       expect(output).toEqual(response)
+      expect(nock.isDone()).toBe(true)
+    })
+
+    it('should return null if receive 404', async () => {
+      fakePrisonerLocationApiClient
+        .get('/today')
+        .matchHeader('authorization', `Bearer ${token.access_token}`)
+        .reply(404, { data: 'data' })
+
+      const output = await prisonerLocationApiClient.todaysFile(token.access_token)
+      expect(output).toBeNull()
+      expect(nock.isDone()).toBe(true)
     })
   })
 
@@ -46,6 +58,7 @@ describe('prisonerLocationApiClient', () => {
 
       const output = await prisonerLocationApiClient.historicFiles(token.access_token)
       expect(output).toEqual(response)
+      expect(nock.isDone()).toBe(true)
     })
   })
 
@@ -57,6 +70,7 @@ describe('prisonerLocationApiClient', () => {
         .reply(200, 'some response', { 'Content-Type': 'application/x-zip-compressed' })
       const stream = await prisonerLocationApiClient.download(token.access_token, 'file.zip')
       expect(stream.read()).toEqual(Buffer.from('some response'))
+      expect(nock.isDone()).toBe(true)
     })
   })
 })
