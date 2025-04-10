@@ -35,7 +35,7 @@ export default class PrisonerLocationApiClient extends RestClient {
     method: string,
     error: SanitisedError<ErrorData>,
   ): Response {
-    if (error.status === 404) {
+    if (error.responseStatus === 404) {
       logger.info(`Returned null for 404 not found when calling ${this.name}: ${path}`)
       return null
     }
