@@ -74,7 +74,7 @@ describe('GET /download', () => {
       .expect(res => {
         expect(res.text).toContain('john smith')
       })
-    expect(prisonerLocationService.download).toHaveBeenCalledWith(undefined, 'file.zip')
+    expect(prisonerLocationService.download).toHaveBeenCalledWith('user1', 'file.zip')
   })
   it('should render not found page if download not available', () => {
     prisonerLocationService.download.mockRejectedValue(new Error('Not Found'))

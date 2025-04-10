@@ -1,5 +1,6 @@
 import { Readable } from 'stream'
-import { ApiConfig, RestClient, asUser, SanitisedError } from '@ministryofjustice/hmpps-rest-client'
+import { ApiConfig, RestClient, SanitisedError, asSystem } from '@ministryofjustice/hmpps-rest-client'
+import { AuthenticationClient } from '@ministryofjustice/hmpps-auth-clients'
 import config from '../config'
 import logger from '../../logger'
 
@@ -13,20 +14,20 @@ export interface Downloads {
 }
 
 export default class PrisonerLocationApiClient extends RestClient {
-  constructor() {
-    super('Prisoner Location Api Client', config.apis.prisonerLocationApi as ApiConfig, logger)
+  constructor(authenticationClient: AuthenticationClient) {
+    super('Prisoner Location Api Client', config.apis.prisonerLocationApi as ApiConfig, logger, authenticationClient)
   }
 
-  todaysFile(token: string): Promise<Download> {
-    return this.get<Download>({ path: '/today', errorHandler: this.handleNotFoundError }, asUser(token))
+  todaysFile(username: string): Promise<Download> {
+    return this.get<Download>({ path: '/today', errorHandler: this.handleNotFoundError }, asSystem(username))
   }
 
-  historicFiles(token: string): Promise<Downloads> {
-    return this.get<Downloads>({ path: '/list' }, asUser(token))
+  historicFiles(username: string): Promise<Downloads> {
+    return this.get<Downloads>({ path: '/list' }, asSystem(username))
   }
 
-  download(token: string, filename: string): Promise<Readable> {
-    return this.stream({ path: `/download/${filename}` }, asUser(token))
+  download(username: string, filename: string): Promise<Readable> {
+    return this.stream({ path: `/download/${filename}` }, asSystem(username))
   }
 
   private handleNotFoundError<Response, ErrorData>(

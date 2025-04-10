@@ -11,7 +11,7 @@ describe('Prisoner Location service', () => {
 
   describe('todaysFile', () => {
     beforeEach(() => {
-      prisonerLocationApiClient = new PrisonerLocationApiClient() as jest.Mocked<PrisonerLocationApiClient>
+      prisonerLocationApiClient = new PrisonerLocationApiClient(null) as jest.Mocked<PrisonerLocationApiClient>
       prisonerLocationService = new PrisonerLocationService(prisonerLocationApiClient)
     })
 
@@ -34,7 +34,7 @@ describe('Prisoner Location service', () => {
 
   describe('historicFiles', () => {
     beforeEach(() => {
-      prisonerLocationApiClient = new PrisonerLocationApiClient() as jest.Mocked<PrisonerLocationApiClient>
+      prisonerLocationApiClient = new PrisonerLocationApiClient(null) as jest.Mocked<PrisonerLocationApiClient>
       prisonerLocationService = new PrisonerLocationService(prisonerLocationApiClient)
     })
 
@@ -57,7 +57,7 @@ describe('Prisoner Location service', () => {
 
   describe('download', () => {
     beforeEach(() => {
-      prisonerLocationApiClient = new PrisonerLocationApiClient() as jest.Mocked<PrisonerLocationApiClient>
+      prisonerLocationApiClient = new PrisonerLocationApiClient(null) as jest.Mocked<PrisonerLocationApiClient>
       prisonerLocationService = new PrisonerLocationService(prisonerLocationApiClient)
     })
 
