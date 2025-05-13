@@ -42,11 +42,11 @@ generic-service:
     hmpps-prisoner-location-ui-application-insights:
       APPLICATIONINSIGHTS_CONNECTION_STRING: "APPLICATIONINSIGHTS_CONNECTION_STRING"
     hmpps-prisoner-location-ui-auth-code:
-      AUTH_CODE_CLIENT_ID: "API_CLIENT_ID"
-      AUTH_CODE_CLIENT_SECRET: "API_CLIENT_SECRET"
+      AUTH_CODE_CLIENT_ID: "AUTH_CODE_CLIENT_ID"
+      AUTH_CODE_CLIENT_SECRET: "AUTH_CODE_CLIENT_ID"
     hmpps-prisoner-location-ui-client-creds:
-      CLIENT_CREDS_CLIENT_ID: "SYSTEM_CLIENT_ID"
-      CLIENT_CREDS_CLIENT_SECRET: "SYSTEM_CLIENT_SECRET"
+      CLIENT_CREDS_CLIENT_ID: "CLIENT_CREDS_CLIENT_ID"
+      CLIENT_CREDS_CLIENT_SECRET: "CLIENT_CREDS_CLIENT_SECRET"
     hmpps-prisoner-location-ui-session-secret:
       SESSION_SECRET: "SESSION_SECRET"
     elasticache-redis:
