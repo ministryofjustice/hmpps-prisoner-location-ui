@@ -1,11 +1,11 @@
 generic-service:
-  nameOverride: hmpps-prisoner-location
+  nameOverride: hmpps-prisoner-location-ui
   productId: "DPS057"
 
   replicaCount: 4
 
   image:
-    repository: quay.io/hmpps/hmpps-prisoner-location
+    repository: ghcr.io/ministryofjustice/hmpps-prisoner-location
     tag: app_version # override at deployment time
     port: 3000
 
@@ -39,13 +39,15 @@ generic-service:
     TOKEN_VERIFICATION_ENABLED: "true"
 
   namespace_secrets:
-    application-insights:
+    hmpps-prisoner-location-ui-application-insights:
       APPLICATIONINSIGHTS_CONNECTION_STRING: "APPLICATIONINSIGHTS_CONNECTION_STRING"
-    hmpps-prisoner-location:
+    hmpps-prisoner-location-ui-auth-code:
       AUTH_CODE_CLIENT_ID: "API_CLIENT_ID"
       AUTH_CODE_CLIENT_SECRET: "API_CLIENT_SECRET"
+    hmpps-prisoner-location-ui-client-creds:
       CLIENT_CREDS_CLIENT_ID: "SYSTEM_CLIENT_ID"
       CLIENT_CREDS_CLIENT_SECRET: "SYSTEM_CLIENT_SECRET"
+    hmpps-prisoner-location-ui-session-secret:
       SESSION_SECRET: "SESSION_SECRET"
     elasticache-redis:
       REDIS_HOST: "primary_endpoint_address"
@@ -56,5 +58,5 @@ generic-service:
       - internal
 
 generic-prometheus-alerts:
-  targetApplication: hmpps-prisoner-location
+  targetApplication: hmpps-prisoner-location-ui
   alertSeverity: syscon
