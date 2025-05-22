@@ -11,6 +11,11 @@ generic-service:
     TOKEN_VERIFICATION_API_URL: "https://token-verification-api.prison.service.justice.gov.uk"
     PRISONER_LOCATION_API_URL: "https://prisoner-location-api.prison.service.justice.gov.uk"
 
+  allowlist:
+    groups:
+      - internal
+      - offloc
+
 generic-prometheus-alerts:
   elastiCacheAlertsClusterIds:
     cp-01c7fbb2bb05adc1-001: "HMPPS Prisoner Location ElastiCache Cluster Node 1"
