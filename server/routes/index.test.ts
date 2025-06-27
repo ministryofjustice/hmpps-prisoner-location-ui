@@ -25,6 +25,7 @@ describe('GET /', () => {
     return request(app)
       .get('/')
       .expect('Content-Type', /html/)
+      .expect(200)
       .expect(res => {
         expect(res.text).toContain('hello.zip')
         expect(res.text).not.toContain('No report for today')
@@ -38,6 +39,18 @@ describe('GET /', () => {
       .expect(res => {
         expect(res.text).not.toContain('hello.zip')
         expect(res.text).toContain('No report for today')
+      })
+  })
+
+  it('service errors are handled', () => {
+    prisonerLocationService.todaysFile.mockRejectedValue(new Error('Some problem calling external api!'))
+
+    return request(app)
+      .get('/')
+      .expect('Content-Type', /html/)
+      .expect(500)
+      .expect(res => {
+        expect(res.text).toContain('Some problem calling external api!')
       })
   })
 })
