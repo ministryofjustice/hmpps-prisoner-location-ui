@@ -75,7 +75,7 @@ const stubDownloadMissing = (filename: string = 'today.zip') =>
   })
 
 export default {
-  stubPrisonerLocationPing: ping,
+  stubPing: ping,
   stubTodaysFile,
   stubTodaysFileMissing,
   stubHistoricFiles,
