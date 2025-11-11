@@ -1,6 +1,5 @@
 import { expect, test } from '@playwright/test'
 import hmppsAuth from '../mockApis/hmppsAuth'
-import prisonerLocationApi from '../mockApis/prisonerLocationApi'
 
 import { login, resetStubs } from '../testUtils'
 import IndexPage from '../pages/indexPage'
@@ -25,7 +24,7 @@ test.describe('SignIn', () => {
   })
 
   test('User name visible in header', async ({ page }) => {
-    await login(page, { name: 'A TestUser' })
+    await login(page, { name: 'A TestUser', roles: ['ROLE_PRISONER_LOCATION_DOWNLOAD'] })
 
     const indexPage = await IndexPage.verifyOnPage(page)
 
@@ -33,7 +32,7 @@ test.describe('SignIn', () => {
   })
 
   test('Phase banner visible in header', async ({ page }) => {
-    await login(page)
+    await login(page, { roles: ['ROLE_PRISONER_LOCATION_DOWNLOAD'] })
 
     const indexPage = await IndexPage.verifyOnPage(page)
 
@@ -41,7 +40,7 @@ test.describe('SignIn', () => {
   })
 
   test('User can sign out', async ({ page }) => {
-    await login(page)
+    await login(page, { roles: ['ROLE_PRISONER_LOCATION_DOWNLOAD'] })
 
     const indexPage = await IndexPage.verifyOnPage(page)
     await indexPage.signOut()
@@ -50,7 +49,7 @@ test.describe('SignIn', () => {
   })
 
   test('User can manage their details', async ({ page }) => {
-    await login(page, { name: 'A TestUser' })
+    await login(page, { name: 'A TestUser', roles: ['ROLE_PRISONER_LOCATION_DOWNLOAD'] })
 
     await hmppsAuth.stubManageDetailsPage()
 
@@ -71,7 +70,7 @@ test.describe('SignIn', () => {
 
     await expect(page.getByRole('heading')).toHaveText('Sign in')
 
-    await login(page, { name: 'Some OtherTestUser', active: true })
+    await login(page, { name: 'Some OtherTestUser', active: true, roles: ['ROLE_PRISONER_LOCATION_DOWNLOAD'] })
 
     const indexPage = await IndexPage.verifyOnPage(page)
     await expect(indexPage.usersName).toHaveText('S. Othertestuser')

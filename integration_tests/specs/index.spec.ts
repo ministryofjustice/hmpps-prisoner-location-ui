@@ -12,31 +12,31 @@ test.describe("Today's file", () => {
   })
 
   test('Will provide link for user to download latest file', async ({ page }) => {
-    prisonerLocationApi.stubTodaysFile()
+    await prisonerLocationApi.stubTodaysFile()
     await login(page, { roles: ['ROLE_PRISONER_LOCATION_DOWNLOAD'] })
 
     const indexPage = await IndexPage.verifyOnPage(page)
 
     await expect(indexPage.downloadLink).toHaveAttribute('href', '/download/today.zip')
-    expect(indexPage.noFiles).toBeNull()
+    await expect(indexPage.noFiles).toBeHidden()
   })
 
   test('Will not provide link if no file exists', async ({ page }) => {
-    prisonerLocationApi.stubTodaysFileMissing()
+    await prisonerLocationApi.stubTodaysFileMissing()
     await login(page, { roles: ['ROLE_PRISONER_LOCATION_DOWNLOAD'] })
 
     const indexPage = await IndexPage.verifyOnPage(page)
 
-    await indexPage.downloadLink.isHidden()
+    await expect(indexPage.downloadLink).toBeHidden()
     await expect(indexPage.noFiles).toHaveText('No report for today is available at present.')
   })
 
   test('Will allow user to access historical reports', async ({ page }) => {
-    prisonerLocationApi.stubHistoricFiles()
     await login(page, { roles: ['ROLE_PRISONER_LOCATION_DOWNLOAD'] })
 
     const indexPage = await IndexPage.verifyOnPage(page)
 
+    await prisonerLocationApi.stubHistoricFiles()
     await indexPage.clickHistoric()
     await HistoricPage.verifyOnPage(page)
   })

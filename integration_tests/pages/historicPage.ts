@@ -4,7 +4,9 @@ import AbstractPage from './abstractPage'
 export default class HistoricPage extends AbstractPage {
   readonly header: Locator
 
-  readonly downloadLink: Locator
+  readonly download1Link: Locator
+
+  readonly download2Link: Locator
 
   readonly backLink: Locator
 
@@ -13,10 +15,10 @@ export default class HistoricPage extends AbstractPage {
   private constructor(page: Page) {
     super(page)
     this.header = page.locator('h1', { hasText: 'NOMIS Reports from the last 14 days' })
-    this.downloadLink = page.getByTestId('download')
+    this.download1Link = page.getByTestId('download1')
+    this.download2Link = page.getByTestId('download2')
     this.backLink = page.locator('a', { hasText: 'Back' })
-
-    this.noFiles = page.getByTestId('nofiles')
+    this.noFiles = page.getByTestId('no-files')
   }
 
   static async verifyOnPage(page: Page): Promise<HistoricPage> {
