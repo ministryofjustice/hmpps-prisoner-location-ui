@@ -21,6 +21,12 @@ test.describe('Health', () => {
       expect(payload.status).toBe('UP')
     })
 
+    test('Reports prisoner location UP', async ({ page }) => {
+      const response = await page.request.get('/health')
+      const payload = await response.json()
+      expect(payload.components.prisonerLocationApi.status).toBe('UP')
+    })
+
     test('Ping is accessible and status is UP', async ({ page }) => {
       const response = await page.request.get('/ping')
       const payload = await response.json()
@@ -44,6 +50,7 @@ test.describe('Health', () => {
       const payload = await response.json()
       expect(payload.status).toBe('DOWN')
       expect(payload.components.hmppsAuth.status).toBe('UP')
+      expect(payload.components.prisonerLocationApi.status).toBe('UP')
       expect(payload.components.tokenVerification.status).toBe('DOWN')
       expect(payload.components.tokenVerification.details.status).toBe(500)
       expect(payload.components.tokenVerification.details.attempts).toBe(3)

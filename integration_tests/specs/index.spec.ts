@@ -13,7 +13,7 @@ test.describe("Today's file", () => {
 
   test('Will provide link for user to download latest file', async ({ page }) => {
     await prisonerLocationApi.stubTodaysFile()
-    await login(page, { roles: ['ROLE_PRISONER_LOCATION_DOWNLOAD'] })
+    await login(page)
 
     const indexPage = await IndexPage.verifyOnPage(page)
 
@@ -23,7 +23,7 @@ test.describe("Today's file", () => {
 
   test('Will not provide link if no file exists', async ({ page }) => {
     await prisonerLocationApi.stubTodaysFileMissing()
-    await login(page, { roles: ['ROLE_PRISONER_LOCATION_DOWNLOAD'] })
+    await login(page)
 
     const indexPage = await IndexPage.verifyOnPage(page)
 
@@ -32,7 +32,7 @@ test.describe("Today's file", () => {
   })
 
   test('Will allow user to access historical reports', async ({ page }) => {
-    await login(page, { roles: ['ROLE_PRISONER_LOCATION_DOWNLOAD'] })
+    await login(page)
 
     const indexPage = await IndexPage.verifyOnPage(page)
 

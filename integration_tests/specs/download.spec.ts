@@ -14,7 +14,7 @@ test.describe('Download files', () => {
 
   test("Will allow user to download today's file", async ({ page }) => {
     await prisonerLocationApi.stubTodaysFile()
-    await login(page, { roles: ['ROLE_PRISONER_LOCATION_DOWNLOAD'] })
+    await login(page)
 
     const indexPage = await IndexPage.verifyOnPage(page)
 
@@ -31,7 +31,7 @@ test.describe('Download files', () => {
 
   test('Will return 404 if file not found', async ({ page }) => {
     await prisonerLocationApi.stubTodaysFile()
-    await login(page, { roles: ['ROLE_PRISONER_LOCATION_DOWNLOAD'] })
+    await login(page)
 
     const indexPage = await IndexPage.verifyOnPage(page)
 
@@ -43,7 +43,7 @@ test.describe('Download files', () => {
   })
 
   test('Will allow user to download historical file', async ({ page }) => {
-    await login(page, { roles: ['ROLE_PRISONER_LOCATION_DOWNLOAD'] })
+    await login(page)
 
     const indexPage = await IndexPage.verifyOnPage(page)
 

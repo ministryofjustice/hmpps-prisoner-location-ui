@@ -12,7 +12,7 @@ test.describe('Historic files', () => {
   })
 
   test('Will provide link for user to download file', async ({ page }) => {
-    await login(page, { roles: ['ROLE_PRISONER_LOCATION_DOWNLOAD'] })
+    await login(page)
 
     const indexPage = await IndexPage.verifyOnPage(page)
 
@@ -24,7 +24,7 @@ test.describe('Historic files', () => {
   })
 
   test('Will provide link for multiple files', async ({ page }) => {
-    await login(page, { roles: ['ROLE_PRISONER_LOCATION_DOWNLOAD'] })
+    await login(page)
 
     const indexPage = await IndexPage.verifyOnPage(page)
 
@@ -37,7 +37,7 @@ test.describe('Historic files', () => {
   })
 
   test('Will not provide link if no file exists', async ({ page }) => {
-    await login(page, { roles: ['ROLE_PRISONER_LOCATION_DOWNLOAD'] })
+    await login(page)
 
     const indexPage = await IndexPage.verifyOnPage(page)
 
@@ -49,7 +49,7 @@ test.describe('Historic files', () => {
   })
 
   test('Will provide link back to home', async ({ page }) => {
-    await login(page, { roles: ['ROLE_PRISONER_LOCATION_DOWNLOAD'] })
+    await login(page)
 
     const indexPage = await IndexPage.verifyOnPage(page)
 
