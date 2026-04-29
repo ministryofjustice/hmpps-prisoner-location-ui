@@ -1,4 +1,5 @@
 import { Readable } from 'stream'
+import { AuthenticationClient } from '@ministryofjustice/hmpps-auth-clients'
 import PrisonerLocationService from './prisonerLocationService'
 import PrisonerLocationApiClient, { type Download, Downloads } from '../data/prisonerLocationApiClient'
 import createUserToken from '../testutils/createUserToken'
@@ -11,7 +12,9 @@ describe('Prisoner Location service', () => {
 
   describe('todaysFile', () => {
     beforeEach(() => {
-      prisonerLocationApiClient = new PrisonerLocationApiClient(null) as jest.Mocked<PrisonerLocationApiClient>
+      prisonerLocationApiClient = new PrisonerLocationApiClient(
+        {} as AuthenticationClient,
+      ) as jest.Mocked<PrisonerLocationApiClient>
       prisonerLocationService = new PrisonerLocationService(prisonerLocationApiClient)
     })
 
@@ -34,7 +37,9 @@ describe('Prisoner Location service', () => {
 
   describe('historicFiles', () => {
     beforeEach(() => {
-      prisonerLocationApiClient = new PrisonerLocationApiClient(null) as jest.Mocked<PrisonerLocationApiClient>
+      prisonerLocationApiClient = new PrisonerLocationApiClient(
+        {} as AuthenticationClient,
+      ) as jest.Mocked<PrisonerLocationApiClient>
       prisonerLocationService = new PrisonerLocationService(prisonerLocationApiClient)
     })
 
@@ -57,7 +62,9 @@ describe('Prisoner Location service', () => {
 
   describe('download', () => {
     beforeEach(() => {
-      prisonerLocationApiClient = new PrisonerLocationApiClient(null) as jest.Mocked<PrisonerLocationApiClient>
+      prisonerLocationApiClient = new PrisonerLocationApiClient(
+        {} as AuthenticationClient,
+      ) as jest.Mocked<PrisonerLocationApiClient>
       prisonerLocationService = new PrisonerLocationService(prisonerLocationApiClient)
     })
 

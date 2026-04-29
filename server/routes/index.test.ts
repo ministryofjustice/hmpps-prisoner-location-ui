@@ -3,11 +3,13 @@ import request from 'supertest'
 import { Readable } from 'stream'
 import { appWithAllRoutes } from './testutils/appSetup'
 import PrisonerLocationService from '../services/prisonerLocationService'
-import { Download, Downloads } from '../data/prisonerLocationApiClient'
+import PrisonerLocationApiClient, { Download, Downloads } from '../data/prisonerLocationApiClient'
 
 jest.mock('../services/prisonerLocationService.ts')
 
-const prisonerLocationService = new PrisonerLocationService(null) as jest.Mocked<PrisonerLocationService>
+const prisonerLocationService = new PrisonerLocationService(
+  {} as PrisonerLocationApiClient,
+) as jest.Mocked<PrisonerLocationService>
 
 let app: Express
 
