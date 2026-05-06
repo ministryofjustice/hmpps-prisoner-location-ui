@@ -5,7 +5,7 @@ import PrisonerLocationApiClient from '../data/prisonerLocationApiClient'
 export default class PrisonerLocationService {
   constructor(private readonly prisonerLocationApiClient: PrisonerLocationApiClient) {}
 
-  async todaysFile(username: string): Promise<Download> {
+  async todaysFile(username: string): Promise<Download | null> {
     return this.prisonerLocationApiClient.todaysFile(username)
   }
 

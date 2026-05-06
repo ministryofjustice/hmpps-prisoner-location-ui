@@ -18,8 +18,8 @@ export default class PrisonerLocationApiClient extends RestClient {
     super('Prisoner Location Api Client', config.apis.prisonerLocationApi as ApiConfig, logger, authenticationClient)
   }
 
-  todaysFile(username: string): Promise<Download> {
-    return this.get<Download>({ path: '/today', errorHandler: this.handleNotFoundError }, asSystem(username))
+  todaysFile(username: string): Promise<Download | null> {
+    return this.get<Download | null>({ path: '/today', errorHandler: this.handleNotFoundError }, asSystem(username))
   }
 
   historicFiles(username: string): Promise<Downloads> {
@@ -34,7 +34,7 @@ export default class PrisonerLocationApiClient extends RestClient {
     path: string,
     method: string,
     error: SanitisedError<ErrorData>,
-  ): Response {
+  ): Response | null {
     if (error.responseStatus === 404) {
       logger.info(`Returned null for 404 not found when calling ${this.name}: ${path}`)
       return null
