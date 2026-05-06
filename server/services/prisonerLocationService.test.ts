@@ -24,7 +24,7 @@ describe('Prisoner Location service', () => {
 
       const result = await prisonerLocationService.todaysFile(token)
 
-      expect(result.name).toEqual('john smith')
+      expect(result?.name).toEqual('john smith')
     })
 
     it('Propagates error', async () => {
