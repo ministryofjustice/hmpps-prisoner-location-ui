@@ -63,4 +63,3 @@ generic-service:
 
 generic-prometheus-alerts:
   targetApplication: hmpps-prisoner-location-ui
-  alertSeverity: syscon
